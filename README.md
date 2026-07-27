@@ -84,7 +84,7 @@ Para Linux x86_64, troque `linux_arm64` por `linux_amd64`. Em macOS, use o biná
 ### Windows PowerShell — exemplo completo
 
 ```powershell
-$version = 'v2.0.0'
+$version = 'v2.0.1'
 $asset = 'backlogctl_windows_amd64.exe'
 $base = "https://github.com/cadugevaerd/backlogctl-releases/releases/download/$version"
 Invoke-WebRequest "$base/$asset" -OutFile $asset
