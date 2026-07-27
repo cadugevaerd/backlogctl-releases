@@ -74,6 +74,7 @@ base="https://github.com/cadugevaerd/backlogctl-releases/releases/download/${ver
 curl -fL -O "$base/backlogctl_linux_arm64"
 curl -fL -O "$base/SHA256SUMS"
 grep '  backlogctl_linux_arm64$' SHA256SUMS | sha256sum -c -
+mkdir -p "$HOME/.local/bin"
 install -m 0755 backlogctl_linux_arm64 "$HOME/.local/bin/backlogctl"
 "$HOME/.local/bin/backlogctl" version
 ```
