@@ -1,13 +1,15 @@
 # backlogctl — releases públicas
 
-`backlogctl` é a CLI do **Backlog V2**: um armazenamento local SQLite para organizar backlogs por sistema/repositório, seus itens, prioridades, estados, posição, **descrições executáveis**, contexto de priorização e decisões auditáveis.
+`backlogctl` é uma CLI local-first para **operacionalizar qualquer tipo de trabalho**: vida pessoal, rotinas operacionais, projetos técnicos, produtos, estudos, manutenção ou demandas de equipes.
+
+Ela mantém **múltiplos backlogs independentes em paralelo** no mesmo banco SQLite. Cada backlog reúne seus próprios itens, prioridades, estados, posição, **descrições executáveis**, contexto de priorização e decisões auditáveis.
 
 Este repositório **não contém o código-fonte**. Ele distribui somente binários públicos e verificáveis usados pelos plugins oficiais. Cada release contém `SHA256SUMS` para validar o binário antes de executá-lo.
 
 ## O que a CLI faz
 
 ```text
-Backlogs        criar, listar, consultar, editar, arquivar e vincular a um path
+Backlogs        criar e operar vários backlogs independentes em paralelo: pessoal, operacional, técnico, produto, estudos ou qualquer outro contexto
 Itens           criar, listar, consultar, editar, mudar estado e reordenar; cada item tem título-resumo e descrição executável
 Prioridades     critical / high / medium / low, com posição dentro da faixa
 Contextos       registrar sinais de prioridade com validade, revisão e expiração
@@ -15,6 +17,17 @@ Format           propor reorganização e aplicar somente após confirmação ex
 Export           JSON, Markdown e visão consolidada
 Doctor           inicializar/verificar o banco e a versão do schema
 ```
+
+### Exemplos de backlogs paralelos
+
+```text
+PES         vida, finanças, saúde, compras e pendências
+OPS         rotinas, incidentes, fornecedores e checklist recorrente
+PRD         melhorias, bugs, decisões e entregas
+EST         trilhas, práticas e metas de aprendizagem
+```
+
+Eles coexistem no mesmo banco, mas possuem códigos, itens, vínculo de path e ordenação próprios.
 
 A CLI usa um banco indicado por `--db PATH`; ela não exige um banco global nem acesso direto ao SQLite por agentes.
 
