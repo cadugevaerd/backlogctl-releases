@@ -9,8 +9,8 @@ Este repositório **não contém o código-fonte**. Ele distribui somente binár
 ## O que a CLI faz
 
 ```text
-Backlogs        criar e operar vários backlogs independentes em paralelo: pessoal, operacional, técnico, produto, estudos ou qualquer outro contexto
-Itens           criar, listar, consultar, editar, mudar estado e reordenar; cada item tem título-resumo e descrição executável
+Backlogs        criar e operar vários backlogs independentes em paralelo: pessoal, operacional, técnico, produto, estudos ou qualquer outro contexto; listar, editar, arquivar e vincular a um path
+Itens           criar, listar, consultar, editar, transicionar, reconciliar status, arquivar e reordenar; cada item tem título-resumo e descrição executável
 Prioridades     critical / high / medium / low, com posição dentro da faixa
 Contextos       registrar sinais de prioridade com validade, revisão e expiração
 Format           propor reorganização e aplicar somente após confirmação explícita
@@ -82,7 +82,7 @@ Use a [release mais recente](https://github.com/cadugevaerd/backlogctl-releases/
 ### Linux ARM64 — exemplo completo
 
 ```bash
-version=v2.0.1
+version=v2.0.2
 base="https://github.com/cadugevaerd/backlogctl-releases/releases/download/${version}"
 curl -fL -O "$base/backlogctl_linux_arm64"
 curl -fL -O "$base/SHA256SUMS"
@@ -97,7 +97,7 @@ Para Linux x86_64, troque `linux_arm64` por `linux_amd64`. Em macOS, use o biná
 ### Windows PowerShell — exemplo completo
 
 ```powershell
-$version = 'v2.0.1'
+$version = 'v2.0.2'
 $asset = 'backlogctl_windows_amd64.exe'
 $base = "https://github.com/cadugevaerd/backlogctl-releases/releases/download/$version"
 Invoke-WebRequest "$base/$asset" -OutFile $asset
@@ -129,6 +129,21 @@ DB="$HOME/.backlog/backlog.db"
   --code APP --title "Corrigir timeout de webhook" \
   --description "Revisar timeout, adicionar retry e validar o fluxo de entrega." \
   --criticality high --category bug --db "$DB"
+
+# para uma migração confirmada, --status cria o snapshot no estado informado
+"$BACKLOGCTL" --json item add \
+  --code APP --title "Incidente histórico encerrado" \
+  --description "Registro preservado da fonte de origem." \
+  --status done --criticality medium --category general --db "$DB"
+
+# correções verificadas e itens de teste usam operações auditáveis, nunca SQL direto
+"$BACKLOGCTL" --json item reconcile-status \
+  --id APP-2 --status cancelled --reason "Correção validada" --confirm --db "$DB"
+"$BACKLOGCTL" --json item archive \
+  --id APP-2 --reason "Item de teste sem fonte" --confirm --db "$DB"
+
+# flags pertencem ao comando: uso incompatível falha com exit 2
+# item transition usa --status; merged permanece terminal nesse fluxo normal
 
 # edita somente o descritivo; omitir --description preserva o texto atual
 "$BACKLOGCTL" --json item edit \
