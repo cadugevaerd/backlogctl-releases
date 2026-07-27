@@ -1,6 +1,6 @@
 # backlogctl — releases públicas
 
-`backlogctl` é a CLI do **Backlog V2**: um armazenamento local SQLite para organizar backlogs por sistema/repositório, seus itens, prioridades, estados, posição, contexto de priorização e decisões auditáveis.
+`backlogctl` é a CLI do **Backlog V2**: um armazenamento local SQLite para organizar backlogs por sistema/repositório, seus itens, prioridades, estados, posição, **descrições executáveis**, contexto de priorização e decisões auditáveis.
 
 Este repositório **não contém o código-fonte**. Ele distribui somente binários públicos e verificáveis usados pelos plugins oficiais. Cada release contém `SHA256SUMS` para validar o binário antes de executá-lo.
 
@@ -8,7 +8,7 @@ Este repositório **não contém o código-fonte**. Ele distribui somente binár
 
 ```text
 Backlogs        criar, listar, consultar, editar, arquivar e vincular a um path
-Itens           criar, listar, consultar, editar, mudar estado e reordenar
+Itens           criar, listar, consultar, editar, mudar estado e reordenar; cada item tem título-resumo e descrição executável
 Prioridades     critical / high / medium / low, com posição dentro da faixa
 Contextos       registrar sinais de prioridade com validade, revisão e expiração
 Format           propor reorganização e aplicar somente após confirmação explícita
@@ -69,7 +69,7 @@ Use a [release mais recente](https://github.com/cadugevaerd/backlogctl-releases/
 ### Linux ARM64 — exemplo completo
 
 ```bash
-version=v2.0.0
+version=v2.0.1
 base="https://github.com/cadugevaerd/backlogctl-releases/releases/download/${version}"
 curl -fL -O "$base/backlogctl_linux_arm64"
 curl -fL -O "$base/SHA256SUMS"
@@ -114,7 +114,12 @@ DB="$HOME/.backlog/backlog.db"
   --code APP --name "Aplicação principal" --profile software --db "$DB"
 "$BACKLOGCTL" --json item add \
   --code APP --title "Corrigir timeout de webhook" \
+  --description "Revisar timeout, adicionar retry e validar o fluxo de entrega." \
   --criticality high --category bug --db "$DB"
+
+# edita somente o descritivo; omitir --description preserva o texto atual
+"$BACKLOGCTL" --json item edit \
+  --id APP-1 --description "Timeout revisado; falta validar a integração." --db "$DB"
 
 # consulta a fila e exporta um snapshot
 "$BACKLOGCTL" --json item list --code APP --db "$DB"
