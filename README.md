@@ -8,9 +8,14 @@
 - DB schema: **5**
 - envelope JSON: contract **2**
 - import document: contract **3**
+- commit usado no build: `c12391e4e90349434c79fc483d865423e2ff17e1`
+- `main` privado verificado: `7c78626f78abe1d2c7037cb318e2256fc8244640`
+- CI do `main`: [`quality` + `race` em sucesso](https://github.com/cadugevaerd/backlogctl/actions/runs/30367434937)
 - [Release v2.1.0](https://github.com/cadugevaerd/backlogctl-releases/releases/tag/v2.1.0)
 
-Cada release contém seis builds, `SHA256SUMS` e `backlogctl-release.json`.
+O delta entre o commit de build e o `main` verificado altera somente workflow e testes; portanto, os binários e hashes de v2.1.0 permanecem válidos. Consulte [PROVENANCE.md](PROVENANCE.md).
+
+Cada release contém seis builds, [`SHA256SUMS`](SHA256SUMS) e [`backlogctl-release.json`](backlogctl-release.json). As cópias no `main` correspondem aos assets da release atual.
 
 ## Capacidades
 
