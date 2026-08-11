@@ -1,0 +1,9 @@
+# Estes arquivos são metadados de release e vivem em LF, do jeito que estão commitados.
+# Sem isto, um checkout em Windows com o `core.autocrlf=true` que é default do Git for
+# Windows recebe CRLF na árvore de trabalho, e o script que sincroniza o espelho — que
+# escreve LF, porque copia os assets publicados — faz o `git status` reportar modificação
+# num arquivo cujos bytes são idênticos ao commitado.
+#
+# O SHA256SUMS é o caso que mais importa: ele é comparado byte a byte com o asset
+# publicado, então a árvore de trabalho tem de ser exatamente o que se publica.
+* text=auto eol=lf
