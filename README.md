@@ -4,18 +4,16 @@
 
 ## Release atual
 
-- CLI: **2.1.0**
+- CLI: **2.4.0**
 - DB schema: **5**
 - envelope JSON: contract **2**
 - import document: contract **3**
-- commit usado no build: `c12391e4e90349434c79fc483d865423e2ff17e1`
-- `main` privado verificado: `7c78626f78abe1d2c7037cb318e2256fc8244640`
-- CI do `main`: [`quality` + `race` em sucesso](https://github.com/cadugevaerd/backlogctl/actions/runs/30367434937)
-- [Release v2.1.0](https://github.com/cadugevaerd/backlogctl-releases/releases/tag/v2.1.0)
+- commit usado no build: `5ffe1dfabe26b2756f1df5388a5fda4b9daae5b7`, que é o próprio `main` privado
+- [Release v2.4.0](https://github.com/cadugevaerd/backlogctl-releases/releases/tag/v2.4.0)
 
-O delta entre o commit de build e o `main` verificado altera somente workflow e testes; portanto, os binários e hashes de v2.1.0 permanecem válidos. Consulte [PROVENANCE.md](PROVENANCE.md).
+**Mudança de comportamento nesta versão:** `doctor` é read-only. Ele criava o arquivo de banco ausente e aplicava migrations; agora um caminho inexistente **falha**, nomeando o caminho. Se você dependia do comportamento antigo, use `backlogctl store init --db PATH` antes de diagnosticar, ou `backlogctl update migrate` para migrar um store existente — que é a operação com backup e confirmação. Detalhes em [PROVENANCE.md](PROVENANCE.md).
 
-Cada release contém seis builds, [`SHA256SUMS`](SHA256SUMS) e [`backlogctl-release.json`](backlogctl-release.json). As cópias no `main` correspondem aos assets da release atual.
+Cada release contém seis builds, [`SHA256SUMS`](SHA256SUMS) e [`backlogctl-release.json`](backlogctl-release.json). As cópias no `main` correspondem aos assets da release atual, e essa correspondência é verificada baixando os assets publicados e comparando hash a hash.
 
 ## Capacidades
 
@@ -57,7 +55,7 @@ Os plugins verificam URL imutável, plataforma, SHA-256 e `backlogctl version` a
 ## Instalação manual — Linux ARM64
 
 ```bash
-version=v2.1.0
+version=v2.4.0
 base="https://github.com/cadugevaerd/backlogctl-releases/releases/download/${version}"
 curl -fL -O "$base/backlogctl_linux_arm64"
 curl -fL -O "$base/SHA256SUMS"
